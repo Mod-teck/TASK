@@ -1,149 +1,101 @@
-# Task: Build a “Software Project Management” Web Application using HTML, CSS (Tailwind), and Angular
+# 🚀 TASK: Enterprise-Grade AngularJS App — “Smart Logistics Platform”
 
-## Description:
-Design and develop a complete web application for managing software projects using **HTML**, **Tailwind CSS**, and **Angular**. The application should enable users to:
+## 🧭 **Project Overview:**
+Create a **multi-tenant logistics management system** that handles:
 
-- Create new projects
-- Manage tasks within each project
-- Track project progress
-- Add team members
-
-The frontend should be fully dynamic and interactive.
-
----
-
-## Requirements:
-
-### 1. Frontend:
-
-#### HTML & Tailwind CSS:
-- Design a modern and elegant UI using **Tailwind CSS**
-- Follow best **UX/UI** practices
-- Utilize **Flexbox** and **Grid** for responsive layout
-- Ensure responsiveness across all devices (mobile, tablet, desktop)
-
-#### Angular:
-- Structure app using small, reusable **components**
-- Use **Angular services** for shared logic and data
-- Implement **RxJS** for asynchronous operations (search, filters)
-- Use **Angular Routing** to navigate between:
-  - `Projects`
-  - `Tasks`
-  - `Team Members`
+- Shipping Companies
+- Branches
+- Drivers
+- Shipment Tracking
+- Payment Processing
+- Real-time Alerts
+- Detailed Reporting
 
 ---
 
-### 2. Core Features:
+## 🎯 **Main Objectives:**
 
-#### ✅ Project Management:
-- Create new project with:
-  - Project Name
-  - Project Description
-  - Start Date and End Date
-- Display all projects with:
-  - Name
-  - Description
-  - Progress Percentage
-  - Number of Tasks
-- Enable **edit** and **delete** functionality
+### 1. 🧑‍💼 **Multi-Tenant Authentication System**
+- Login with JWT or OAuth (using either an external API or a local one).
+- Separate permissions for each tenant (shipping company).
+- Support dynamic, changeable permissions (RBAC).
+- Route guards and dynamic views based on user roles.
 
-#### ✅ Task Management:
-- Add tasks within each project
-- Each task includes:
-  - Task Title
-  - Task Description
-  - Status: `In Progress`, `Completed`, `Delayed`
-  - Assigned Team Member
-- Allow **edit** and **delete** for tasks
+### 2. 📦 **Shipment Management**
+- Full CRUD functionality for shipments.
+- Shipments pass through stages (Pickup, Transit, Delivered, Failed).
+- Track all changes with audit logs.
+- Estimate delivery times.
+- Support for heavy filtering and sorting operations.
 
-#### ✅ Team Management:
-- Add team members per project
-- Each member includes:
-  - Name
-  - Role: `Project Manager`, `Developer`, `Designer`
-  - Optional Profile Picture
-- Display team members list per project
+### 3. 🚚 **Driver Management**
+- Create and manage drivers.
+- Track their locations (simulate random location updates every minute).
+- Display active drivers on a map (Google Maps or OpenStreetMap Integration).
 
-#### ✅ Progress Tracking:
-- Display progress bar for each project based on completed tasks
-- Show “Project Completed” message if all tasks are done
+### 4. 💰 **Finance Module**
+- Manage daily payment transactions.
+- Generate financial reports per driver/branch/company.
+- Export reports in PDF/Excel format.
 
-#### ✅ Search & Filter:
-- Search for projects or tasks
-- Filter projects by status:
-  - `In Progress`
-  - `Completed`
-  - `Delayed`
+### 5. 📊 **Reporting Dashboard**
+- Real-time charts (Chart.js, D3.js).
+- Advanced filtering options: by branch, time period, shipment status.
+- Support for large datasets with pagination and lazy loading.
 
----
+### 6. 🌐 **Multi-language Support (i18n)**
+- Support for multiple languages (English + Arabic).
+- Change language dynamically during runtime.
+- Store translations locally and/or fetch from an API.
 
-### 3. Advanced Features:
+### 7. 🔔 **Real-time Notification System**
+- Instant notifications via WebSocket or simulated polling.
+- Each user gets personalized notifications.
+- A notification center that allows filtering and viewing by date.
 
-#### 🌙 Dark Mode:
-- Toggle to enable/disable **Dark Mode**
-- Use **Tailwind CSS dark mode utilities**
+### 8. 📂 **File & Document Handling**
+- Ability to attach PDFs or images to shipments.
+- File preview before uploading.
+- Access permissions based on user role.
 
-#### 🖱️ Drag and Drop:
-- Reorder tasks or move them between projects
-- Use `ngx-drag-drop` for implementation
-
-#### 🎞️ Animations:
-- Animate element transitions (e.g., fade in/out tasks)
-- Use **Angular Animations**
-
-#### 📁 Export Data:
-- Export project data (tasks, team) to:
-  - PDF (`jsPDF`)
-  - CSV (`PapaParse`)
+### 9. 🧪 **Testing & Performance**
+- Write unit tests for custom directives and services.
+- Performance management:
+  - Use of one-time binding `::`
+  - Avoid excessive watchers
+  - Virtual scrolling for efficient shipment listing
 
 ---
 
-### 4. Local Storage:
-- Store all data (projects, tasks, team) in **LocalStorage**
-- Retrieve and display saved data on app reload
+## 💡 **Key Required Skills:**
+- Modular application architecture design.
+- Lazy loading + Code splitting implementation.
+- Building reusable components.
+- Smart use of `$compile`, `$q`, and `$watchGroup`.
+- Avoid using jQuery and use custom directives.
+- Security-aware design for sensitive data handling.
+- Clear strategy for future scaling and updates.
 
 ---
 
-## Creative Design Guidelines:
-
-### 🏠 Dashboard Layout:
-- Display all projects as **cards** with:
-  - Project Name
-  - Progress Bar
-  - Completed/Incomplete Tasks count
-- Prominent `+` button for new project
-
-### 📄 Project Details Page:
-- Project Info: name, description, dates
-- Task list with status icons:
-  - ✓ = Completed
-  - ⏳ = In Progress
-- Team members with roles
-- “Add Task” button near tasks list
-
-### 📊 Tables & Components:
-- Responsive tables for tasks and team members
-- Support **sorting** and **filtering**
-- Buttons: `Edit`, `Delete`, `Change Status`
-
-### 🔗 Navigation:
-- Top Navbar with links to:
-  - Dashboard
-  - Projects
-  - Tasks
-  - Team
+## 📁 **Bonus (Optional + Extra Points):**
+- Offline Mode using IndexedDB + Service Workers.
+- Progressive Web App (PWA) support.
+- Theme switching.
+- User activity tracking.
+- Simple Workflow Editor (drag-and-drop like BPMN).
 
 ---
 
-## ✨ Visual Effects:
-- Use **Tailwind CSS**:
-  - Light shadows
-  - Rounded corners
-  - Color status indicators: green, yellow, red
+## ✅ **Evaluation Criteria:**
 
----
-
-## 💡 User Experience (UX):
-- Clear button/link functionality
-- Confirmation dialogs for `edit`/`delete`
-- Smooth drag & drop with animations
+| Area                                | Points |
+|-------------------------------------|--------|
+| Architecture & Organization         | 20     |
+| Performance                         | 15     |
+| Reusability & Components            | 15     |
+| State Management & User Permissions | 10     |
+| User Experience (UX)                | 10     |
+| Reporting & Analytics               | 10     |
+| Multi-language & Configuration      | 10     |
+| Testing                             | 10     |
