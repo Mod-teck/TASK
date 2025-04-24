@@ -1,74 +1,43 @@
-# Inventory Management System with Demand Forecasting
+# 🚀 Task: Advanced Laravel Application - "Integrated Task Management System with Role and Permission Support"
 
-## Description
-
-This is a simple Inventory Management System built using **Laravel** and **SQL**.  
-The system allows users to:
-
-- Add new products
-- Track available stock for each product
-- Record product orders
-- Generate a demand forecast report based on past order trends
-  
----
-
-## Features
-
-- **Add Products:** Add new products with name, description, and quantity
-- **List Products:** View all available products and their quantities
-- **Create Orders:** Place orders for products and reduce available stock accordingly
-- **Demand Forecasting:** Report products that need to be reordered based on recent demand
+## 🧭 Project Description:
+Create a **Task Management System** using **PHP** and **Laravel** with support for **roles and permissions**. The system will allow users to manage their daily tasks, assign tasks to teams, and track task progress. The system should support task creation, role customization, and time tracking for each task, along with notifications and alerts.
 
 ---
 
-## Technologies Used
+## 🎯 Main Objectives:
 
-- Laravel (PHP Framework)
-- MySQL or any other SQL-based database
+### 1. 📝 **Task Management**
+- Develop a **task management system** that allows users to create, update, and delete tasks.
+- Tasks should be **assigned to different users** based on their roles.
+- Each task should have a **status** (e.g., "In Progress", "Completed", "Deferred") with **start and end dates**.
+- Provide **alerts to users** when a task's status changes or when a deadline is approaching.
 
----
+### 2. 👤 **Role-based Access Control (RBAC)**
+- Implement a **role and permission system** where an **admin** can add and customize roles (e.g., "Admin", "User", "Manager").
+- Each **role** has specific **permissions** such as managing tasks, adding users, and interacting with data.
+- Integrate **authentication via JWT** or **OAuth 2.0** to secure access.
 
-## Models
+### 3. 🔔 **Real-time Notifications**
+- Add **real-time notifications** to users using **Laravel Broadcast (WebSockets)** when a task changes or when the deadline is near.
+- Support **email notifications** using **Laravel Mail** or integrate with services like **Mailgun**.
 
-### 1. Product
+### 4. 📊 **Reports and Analytics**
+- Provide **progress reports** for each user or team (e.g., completed tasks, in-progress tasks, deferred tasks).
+- Support **interactive data visualization** using **Chart.js** or **Laravel Charts**.
+- **Export reports** in multiple formats such as **PDF** or **Excel**.
 
-Represents a product in the inventory.
+### 5. 🧑‍💼 **User Management**
+- Enable **user management** such as adding, editing, and deleting users.
+- Support updating user personal information, such as password, profile picture, etc.
+- Add advanced functionality for admins to enforce access restrictions and assign roles to users.
 
-| Field        | Type         | Description                      |
-|--------------|--------------|----------------------------------|
-| id           | Integer      | Primary key                      |
-| name         | String       | Product name                     |
-| description  | Text         | Product description              |
-| quantity     | Integer      | Available stock                  |
-| created_at   | Timestamp    | Record creation date             |
-| updated_at   | Timestamp    | Record last update date          |
+### 6. 🧪 **Testing**
+- Write **unit tests** using **PHPUnit** to validate the core functionalities.
+- Implement **integration tests** to test the interaction between system components.
+- Perform **performance testing** to ensure the system can handle a large number of tasks and users.
 
----
-
-### 2. Order
-
-Represents a customer order for a product.
-
-| Field        | Type         | Description                                 |
-|--------------|--------------|---------------------------------------------|
-| id           | Integer      | Primary key                                 |
-| product_id   | Integer      | Foreign key referencing `products` table    |
-| quantity     | Integer      | Quantity ordered                            |
-| order_date   | Date         | Date of the order                           |
-| created_at   | Timestamp    | Record creation date                        |
-| updated_at   | Timestamp    | Record last update date                     |
-
----
-
-## API Endpoints
-
-### 1. Add a New Product
-
-- **Endpoint:** `POST /api/products`
-- **Input:** JSON object with:
-  ```json
-  {
-    "name": "Product Name",
-    "description": "Product Description",
-    "quantity": 100
-  }
+### 7. ⚙️ **Performance Optimization**
+- Optimize database queries using **Eloquent** and **Laravel Caching**.
+- Use **Queues** to handle heavy tasks in the background, such as sending notifications or processing analytical reports.
+- Implement **lazy loading** to load data only when needed.
