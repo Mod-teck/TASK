@@ -1,85 +1,75 @@
-# ✅ Advanced Java Spring Boot – Task Management API
-
-## 🎯 Objective
-Build a complete **REST API** for managing tasks assigned to different users. The system should include:
-
-- **JWT-based authentication**
-- Full **CRUD functionality**
-- **Filtering, sorting, and pagination**
-- **Clean, modular architecture**
-- Optional **API documentation**
+# 🎯 Objective
+Build a simple **Order Management System** using Spring Boot that showcases advanced concepts.  
+**Level:** Senior / Advanced
 
 ---
 
-## 📋 Project Details
+## 📋 Basic Requirements
 
-### 1. ✅ User Authentication (Spring Security + JWT)
-- Register a new user
-- Login and receive a **JWT token**
-- Secure all protected endpoints using **JWT**
+### Microservices Architecture  
+- Create **two separate** Spring Boot applications:
+  1. **Product Service**  
+     - Manage products (CRUD) with fields: `id`, `name`, `price`, `quantity`.
+  2. **Order Service**  
+     - Manage orders (create order, get order details) linked to products by `id`.  
 
----
-
-### 2. 📦 Tasks API
-Implement full **CRUD** operations for tasks with the following fields:
-
-- `title`
-- `description`
-- `status` (e.g., TODO, IN_PROGRESS, DONE)
-- `priority` (e.g., LOW, MEDIUM, HIGH)
-- `dueDate`
-- `createdAt`
-- `userId`
-
-#### Features:
-- Only the task **owner** can update or delete it
-- Support for:
-  - **Pagination**
-  - **Filtering** (by status, date, etc.)
-  - **Sorting** (by priority, createdAt, etc.)
+- Services communicate with each other via **OpenFeign** or **WebClient**.
 
 ---
 
-### 3. ⚙️ Architecture
-Use the following technologies:
-
-- **Spring Boot 3+**
-- **Spring Data JPA**
-- **Spring Security + JWT**
-- **MapStruct** or **ModelMapper**
-- **Lombok**
-- **H2** (in-memory) or **PostgreSQL**
-
-#### Suggested Folder Structure:
-- `controller/`
-- `service/`
-- `repository/`
-- `dto/`
-- `entity/`
-- `exception/`
+## 🔐 Security & JWT Authentication  
+- Add authentication using **JWT**.  
+- **`/products`** create/update endpoints: accessible **only** to users with **ADMIN** role.  
+- **`/orders`** create endpoint: accessible **only** to users with **USER** role.  
+- Implement using **Spring Security** + **JWT**.
 
 ---
 
-### 4. 🔒 Security
-- Implement **Role-Based Access Control** (RBAC)
-  - Regular user: can access only their own tasks
-  - Admin user: can view all tasks
+## 🔄 Resilience & Fault Tolerance  
+In **Order Service**, use **Resilience4j** (or **Hystrix**) to add:  
+- **Circuit Breaker** when calling Product Service.  
+- **Retry Mechanism** (e.g., 3 retries on failure).
 
 ---
 
-### 5. 🧪 Testing
-Include tests using **JUnit 5** and **Mockito**:
-
-- Unit tests for services and authentication
-- Integration tests for major endpoints
-
----
-
-### 6. 📝 Extras (Optional)
-- Generate API documentation with **Swagger/OpenAPI**
-- Include a `README.md` with:
-  - How to run the project
-  - Postman collection or example cURL requests
+## 💾 Database  
+- **Product Service**:  
+  - Use **H2** (for development)  
+  - Use **Flyway** for migrations to create the `products` table.  
+- **Order Service**:  
+  - Use **PostgreSQL** (e.g., via Docker)  
+  - Define `orders` and `order_items` tables.  
+- Use **Spring Data JPA** + **Hibernate** in both services.
 
 ---
 
+## 🧪 Testing  
+- **Unit Tests** for Product Service using **Mockito**.  
+- **Integration Test** for creating an order using **Testcontainers**.
+
+---
+
+## 🐳 Dockerization  
+- Create a **Dockerfile** for each service.  
+- **(Bonus)** Provide a **docker-compose.yml** to run:
+  - Product Service
+  - Order Service
+  - Databases
+  - Netflix Eureka (Service Discovery)
+
+---
+
+## 🎁 Additional (Bonus) Requirements  
+- **API Documentation**: Swagger / OpenAPI  
+- **Advanced Logging**: Logback or simple ELK Stack  
+- **Validation**: DTO validation (e.g., product price must be non-negative)  
+- **Messaging**: Send an event via Kafka or RabbitMQ when product quantity changes
+
+---
+
+## 📥 Deliverables  
+1. **Source code** in a Git repository.  
+2. **README.md** including:
+   - Instructions to run the project.
+   - Architectural decisions (e.g., why Resilience4j over Hystrix?).  
+3. **Postman Collection** for testing the APIs.
