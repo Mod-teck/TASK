@@ -1,96 +1,74 @@
-# Event & Activity Management Mobile App
+## 🚀 Functional Requirements
 
-## Description
-The goal is to design and develop a complete mobile application for managing events and activities using **React Native**. The app should allow users to:
+1. **Authentication Flow**  
+   - **Sign In / Sign Up Screens** using email/password against a mock REST endpoint.  
+   - Securely store a dummy JWT (or token) with **AsyncStorage** or **SecureStore**.
 
-- Create new events
-- Invite other users
-- Manage attendance (Attendees)
-- Track the timeline and progress of events
+2. **Item Catalog**  
+   - Fetch a paginated list of items (e.g. products) from a mock API (you can run a `json-server` or similar).  
+   - Display in a scrollable **FlatList** with **infinite scroll** and **pull-to-refresh**.  
+   - Each item: `id`, `title`, `thumbnailUrl`.
 
-The system must include a fully functional frontend interface for mobile devices (Android and iOS).
+3. **Item Details & Favorites**  
+   - Tap an item to navigate to a **Details** screen with a **shared element** (Hero) animation on the thumbnail.  
+   - Show full info: `title`, `description`, `price`.  
+   - “Add to Favorites” toggle persists locally; Favorites appear on a separate tab.
 
----
+4. **Offline Caching & Sync**  
+   - Cache item list and details with **realm** or **SQLite** so the app works offline.  
+   - When online again, sync new data in background (show a “syncing” indicator).
 
-## Requirements
-
-### 1. Frontend (UI/UX)
-
-#### React Native Components
-- Use core React Native components such as `View`, `Text`, `Button`, `FlatList`, and `ScrollView`.
-- Design a modern and clean user interface.
-- Use **React Navigation** for screen transitions.
-- Use UI libraries like **React Native Paper** or **NativeBase** to enhance design and include ready-made UI components.
-
-#### Responsive Design
-- Ensure the app works well on various screen sizes (phones and tablets).
-- Use **Flexbox** for flexible and responsive layout designs.
-
-#### Local Storage
-- Store all data (events, users, attendees) locally using **AsyncStorage**.
-- On reopening the app, data should be retrieved from AsyncStorage and displayed correctly.
+5. **Push Notifications Stub**  
+   - Integrate a dummy **Push Notification** handler (use `react-native-push-notification` or equivalent) to schedule a local notification 5 seconds after a button press.
 
 ---
 
-### 2. Core Features
+## ⚙️ Technical Requirements
 
-#### Event Management
-- Users can create a new event by entering:
-  - Event name
-  - Start and end date/time
-  - Event location
-  - Event description
-- Display a list of all events with details such as:
-  - Name, date, location, number of participants
-- Allow editing and deleting of existing events
-
-#### User Invitations
-- Users can invite others to the event
-- Each invited user should have a:
-  - Name
-  - Email address
-- Display the list of invited users per event
-
-#### Attendance Management
-- Users can set each invited user's attendance status:
-  - Attending / Not Attending / Pending
-- Display attendees and their statuses per event
-- Allow updating attendance status
-
-#### Event Timeline
-- Display a timeline view of upcoming and completed events
-- Show a countdown for upcoming events
-- Show a message if the event is completed
-
-#### Search & Filter
-- Enable searching for a specific event
-- Filter events based on status:
-  - Upcoming
-  - Completed
+- **Language & Framework**:  
+  - React Native (>=0.70) with **TypeScript**  
+- **State Management**:  
+  - **Redux Toolkit** with **Redux Saga** or **React Query** for data-fetching/state.  
+- **Navigation**:  
+  - React Navigation (v6) with **Bottom Tabs** + **Stack**.  
+- **Animations**:  
+  - **Reanimated 2** + **React Navigation Shared Element** (for Hero animation).  
+- **Dependency Injection** (optional):  
+  - **tsyringe** or **InversifyJS**.  
+- **Form Handling & Validation**:  
+  - **React Hook Form** + **Yup** for auth forms.  
+- **Networking**:  
+  - Axios with global error interceptor + retry logic (e.g. axios-retry).  
+- **Offline DB**:  
+  - Realm or SQLite (via `react-native-sqlite-storage`).  
+- **Push Notifications**:  
+  - Setup a local notification schedule (no server required).
 
 ---
 
-### 3. Advanced Features
+## 🧪 Testing
 
-#### Push Notifications
-- Send in-app notifications to remind users of upcoming events
-- Use **React Native Push Notification** for implementation
-
-#### Google Maps Integration
-- Display the event location on a map using **React Native Maps**
-- Use the entered address to show the correct geographic location
-
-#### Image Upload
-- Allow users to upload images for events (e.g., cover photo)
-- Use **React Native Image Picker** to select images from the device
-
-#### Dark Mode
-- Provide a **Dark Mode toggle**
-- Entire design should adjust based on the selected mode
+1. **Unit Tests**  
+   - Services, reducers, sagas/queries using **Jest** & **React Native Testing Library**.  
+2. **Component & Integration Tests**  
+   - Snapshot & behavior tests for Login, Item List, Detail screen.  
+3. **End-to-End** (Bonus)  
+   - Use **Detox** or **Appium** for a simple login → load list → open details scenario.
 
 ---
 
-### 4. Optional Technologies (Bonus)
+## 🐳 (Optional) Mock API
 
-- **Animations**: Add simple effects when elements are added/removed (e.g., fade in/out for events)
-- **Real-Time Updates**: If time allows, use **Firebase Firestore** to implement real-time data syncing
+- Provide a `docker-compose.yml` or makefile to run a **json-server** with sample item data on port 3001.
+
+---
+
+## 📥 Deliverables
+
+1. **GitHub Repository**  
+   - Complete source code in a public or private repo.  
+2. **README.md**  
+   - Setup instructions (SDK versions, how to run mock API).  
+   - Architectural decisions (why Redux Toolkit/Saga vs React Query, Realm vs SQLite, etc.).  
+   - How to run tests and (optional) CI pipeline.  
+3. **Postman Collection** or sample **curl** commands for the mock API.
