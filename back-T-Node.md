@@ -1,60 +1,85 @@
-# 🚀 Task: Intermediate Node.js App — "Clinic Appointment Management System"
-
-## 🧭 Project Description:
-Develop a web application using **Node.js** and **Express.js** to manage clinic appointments. The system allows doctors to manage their schedules, and patients to book appointments, with support for notifications and medical follow-ups.
+# 🎯 Objective:  
+Build a small Node.js service that demonstrates your mastery of advanced concepts like TypeScript, security, caching, testing, and containerization within one working day.  
 
 ---
 
-## 🎯 Main Objectives:
+## 🛠 Functional Tasks:  
 
-### 1. 👨‍⚕️ Doctor Dashboard
-- User registration and login for doctors.
-- Profile management (name, specialty, working hours, etc.).
-- Appointment management: view, confirm, cancel, and reschedule.
-- Ability to send notes or follow-ups to patients.
-
-### 2. 🧑‍💼 Patient Interface
-- Patient registration and login.
-- Book appointments based on specialty or doctor availability.
-- View current and past appointments.
-- Receive notifications via email or system alerts for appointment updates.
-
-### 3. 📅 Smart Scheduling System
-- Display a calendar view of doctor availability.
-- Prevent double-booking and detect scheduling conflicts.
-- Support for blocking off-time slots (e.g., vacations or emergencies).
-
-### 4. 🔒 Authentication & Security
-- Secure login using **JWT**.
-- Role-based access control (Patient / Doctor / Admin).
-- Password reset functionality with email verification.
-
-### 5. 🔔 Notifications & Alerts
-- Real-time notifications for appointment status changes.
-- Reminders sent before appointments using schedulers like **node-cron** or **Agenda**.
-- Email notifications using **Nodemailer**.
-
-### 6. 📊 Admin Panel (Optional)
-- Add/remove doctors.
-- View booking analytics and statistics.
-- Manage patient records.
-
-### 7. 🧪 Testing
-- Unit tests for models and services using **Jest** or **Mocha**.
-- Integration tests for API routes.
-
-### 8. 🐳 Deployment (Optional)
-- Containerize the app using **Docker**.
-- Deploy to platforms like **Render**, **Railway**, or a basic **VPS**.
+### **Authentication & Authorization**  
+- Create a JWT system with endpoints for registration (`/auth/register`) and login (`/auth/login`).  
+- Each user has a role: **USER** or **ADMIN**.  
+- Secure all other endpoints based on the user's role.  
 
 ---
 
-## 💡 Required Skills & Tools:
-- Node.js / Express.js
-- MongoDB or PostgreSQL
-- JWT / Bcrypt
-- Nodemailer
-- Mongoose or Sequelize
-- EJS or React for frontend (optional)
-- Docker (optional)
-- Jest / Mocha for testing
+### **Products Module**  
+- Implement full CRUD operations for products (`/products`):  
+  - `GET /products` with pagination (limit + offset).  
+  - `POST /products` (ADMIN only).  
+  - `PUT /products/:id` (ADMIN only).  
+  - `DELETE /products/:id` (ADMIN only).  
+- Each product includes fields: `id`, `name`, `price`, `quantity`.  
+- Apply Redis caching for `GET /products` (cache expires after 60 seconds).  
+
+---
+
+### **Orders Module**  
+- Create a purchase order via `POST /orders` (USER only) containing a list of `{ productId, qty }`.  
+- When creating an order:  
+  - Verify product quantity availability in the database.  
+  - Deduct the quantity from stock using transactions.  
+- View order details via `GET /orders/:id` (USER only).  
+
+---
+
+## ⚙️ Technical Requirements:  
+
+### **Language & Framework**  
+- Node.js with TypeScript.  
+- **Express** or **NestJS** (choose one).  
+
+### **Database**  
+- PostgreSQL (can be run via Docker).  
+- ORM: **TypeORM** or **Sequelize**.  
+
+### **Caching**  
+- Redis (can be run via Docker).  
+
+### **Security**  
+- JWT with Passport.js or similar library.  
+- Validate DTOs using **class-validator**.  
+
+### **Rate Limiting**  
+- Limit to **100 requests per IP per hour** for all endpoints using a library like **express-rate-limit**.  
+
+### **Documentation**  
+- Document the API using **Swagger** (OpenAPI).  
+
+---
+
+## 🧪 Testing:  
+
+### **Unit Tests**  
+- Test product and order services using **Jest** and **ts-jest**.  
+
+### **Integration Tests**  
+- Test end-to-end order creation flow using **SuperTest** and **Testcontainers** (PostgreSQL + Redis).  
+
+---
+
+## 🐳 Dockerization:  
+- Create a **Dockerfile** for each service (app + database + Redis).  
+- Create a **docker-compose.yml** file to deploy all services together:  
+  - Node.js app  
+  - PostgreSQL  
+  - Redis  
+
+---
+
+## 📥 Submission:  
+1. Git repository (GitHub/GitLab) with full source code.  
+2. `README.md` including:  
+   - Setup instructions (local and Docker).  
+   - Technical decisions explained (e.g., why NestJS/Express, TypeORM/Sequelize).  
+   - Usage examples (curl/Postman Collection).  
+3. **Postman Collection** for API testing.  
