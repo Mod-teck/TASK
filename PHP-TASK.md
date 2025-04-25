@@ -1,43 +1,79 @@
-# 🚀 Task: Advanced Laravel Application - "Integrated Task Management System with Role and Permission Support"
+# E-Commerce Backend Requirements
 
-## 🧭 Project Description:
-Create a **Task Management System** using **PHP** and **Laravel** with support for **roles and permissions**. The system will allow users to manage their daily tasks, assign tasks to teams, and track task progress. The system should support task creation, role customization, and time tracking for each task, along with notifications and alerts.
+**Level:** Senior / Advanced
+
+## Basic Requirements
+
+### 1. Multi-Tenancy (Advanced Scoping)
+- Each **User** has their own set of **Products** and **Orders**.  
+- Use **Eloquent Global Scopes** or **Traits** to ensure each user only sees their own products and orders.
+
+### 2. API Authentication & Roles
+- Authentication using **Laravel Sanctum** (API Tokens).  
+- **Roles** (via Spatie **laravel-permission**):
+  - **Admin**: can create/update/delete **any** product.  
+  - **Customer**: can create orders and view **only** their own orders.
+
+### 3. Caching & Performance
+- Cache the product list in **Redis** for **15 minutes**.  
+- Automatically clear/refresh the cache on product update/delete.  
+- Optionally use **laravel-model-caching**.
+
+### 4. Queue & Background Jobs
+- On order creation, send an email notification to the user using **Laravel Notifications**, queued via **Redis Queue**.  
+- Add retry logic (3 attempts) for the notification job on failure.
+
+### 5. Validation & Error Handling
+- Use **Form Request** classes for validating product & order data.  
+- Add a **Custom Validation Rule** to ensure ordered quantity ≤ available product quantity.  
+- Handle errors via exceptions and return a **unified JSON response** structure.
+
+### 6. Testing
+- Write **Feature Tests** (with Pest PHP) covering:
+  - Order creation with product interaction.  
+  - Admin vs. Customer permissions.  
+- *(Bonus)* Enable **Parallel Testing** to speed up tests.
 
 ---
 
-## 🎯 Main Objectives:
+## Bonus Requirements
 
-### 1. 📝 **Task Management**
-- Develop a **task management system** that allows users to create, update, and delete tasks.
-- Tasks should be **assigned to different users** based on their roles.
-- Each task should have a **status** (e.g., "In Progress", "Completed", "Deferred") with **start and end dates**.
-- Provide **alerts to users** when a task's status changes or when a deadline is approaching.
+1. **API Documentation**: Generate Swagger/OpenAPI docs (e.g. using **L5-Swagger**).  
+2. **Real-Time Updates**: Notify users of order status changes in real time with **Laravel Echo** + WebSockets.  
+3. **Admin Dashboard**: Simple dashboard (Blade or Inertia.js) showing stats (product count, order count).  
+4. **CI/CD**: Add `.github/workflows/laravel.yml` to run tests automatically.  
+5. **Monitoring**: Use **Laravel Telescope** for performance/error monitoring.
 
-### 2. 👤 **Role-based Access Control (RBAC)**
-- Implement a **role and permission system** where an **admin** can add and customize roles (e.g., "Admin", "User", "Manager").
-- Each **role** has specific **permissions** such as managing tasks, adding users, and interacting with data.
-- Integrate **authentication via JWT** or **OAuth 2.0** to secure access.
+---
 
-### 3. 🔔 **Real-time Notifications**
-- Add **real-time notifications** to users using **Laravel Broadcast (WebSockets)** when a task changes or when the deadline is near.
-- Support **email notifications** using **Laravel Mail** or integrate with services like **Mailgun**.
+## Database Schema
 
-### 4. 📊 **Reports and Analytics**
-- Provide **progress reports** for each user or team (e.g., completed tasks, in-progress tasks, deferred tasks).
-- Support **interactive data visualization** using **Chart.js** or **Laravel Charts**.
-- **Export reports** in multiple formats such as **PDF** or **Excel**.
+```sql
+-- products table
+CREATE TABLE products (
+  id         BIGINT UNSIGNED PRIMARY KEY,
+  name       VARCHAR(255) NOT NULL,
+  price      DECIMAL(10,2) NOT NULL,
+  quantity   INT NOT NULL,
+  user_id    BIGINT UNSIGNED NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
 
-### 5. 🧑‍💼 **User Management**
-- Enable **user management** such as adding, editing, and deleting users.
-- Support updating user personal information, such as password, profile picture, etc.
-- Add advanced functionality for admins to enforce access restrictions and assign roles to users.
+-- orders table
+CREATE TABLE orders (
+  id          BIGINT UNSIGNED PRIMARY KEY,
+  user_id     BIGINT UNSIGNED NOT NULL,
+  total_price DECIMAL(10,2) NOT NULL,
+  status      VARCHAR(50)    NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
 
-### 6. 🧪 **Testing**
-- Write **unit tests** using **PHPUnit** to validate the core functionalities.
-- Implement **integration tests** to test the interaction between system components.
-- Perform **performance testing** to ensure the system can handle a large number of tasks and users.
-
-### 7. ⚙️ **Performance Optimization**
-- Optimize database queries using **Eloquent** and **Laravel Caching**.
-- Use **Queues** to handle heavy tasks in the background, such as sending notifications or processing analytical reports.
-- Implement **lazy loading** to load data only when needed.
+-- order_items table
+CREATE TABLE order_items (
+  id         BIGINT UNSIGNED PRIMARY KEY,
+  order_id   BIGINT UNSIGNED NOT NULL,
+  product_id BIGINT UNSIGNED NOT NULL,
+  quantity   INT NOT NULL,
+  FOREIGN KEY (order_id)   REFERENCES orders(id),
+  FOREIGN KEY (product_id) REFERENCES products(id)
+);
